@@ -9,7 +9,7 @@ import 'es6-promise/auto'
 
 Vue.use(ElementUI);
 Vue.use(VueRouter);
-Axios.defaults.baseURL = 'http://172.22.1.181:8080/RoutePlanSystem';
+Axios.defaults.baseURL = '/RoutePlanSystem';
 Axios.defaults.withCredentials=true;
 Vue.prototype.$axios = Axios;
 

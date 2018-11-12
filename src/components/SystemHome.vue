@@ -61,9 +61,9 @@
                 </el-aside>
                 <el-container>
                     <el-main v-loading="isLoading"><router-view @addCar="addCarShow" @loaded="isLoaded"></router-view></el-main>
-                    <el-footer>
+                    <!-- <el-footer>
                         &copy;Copyright:2018 Mis Lab
-                    </el-footer>
+                    </el-footer> -->
                 </el-container>
             </el-container>
         </el-container>
@@ -124,7 +124,8 @@ export default {
     }
     .el-main {
         margin-top: 10px;
-        height: 800px;
+        min-height: 900px;
+        height: 100%;
     }
     .el-footer{
         height: 60px;

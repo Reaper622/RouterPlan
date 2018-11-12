@@ -7,6 +7,15 @@
             <el-row  class="row" >
                        <el-col :span="12" :offset="2">
                            <el-input
+                            placeholder="输入用户ID"
+                            prefix-icon="el-icon-edit"
+                            v-model="userIdInput">
+                            </el-input>
+                       </el-col>
+            </el-row>
+            <el-row  class="row" >
+                       <el-col :span="12" :offset="2">
+                           <el-input
                             placeholder="输入用户名"
                             prefix-icon="el-icon-edit"
                             v-model="usernameInput">
@@ -65,6 +74,7 @@
 export default {
     data(){
         return{
+            userIdInput:'',
             usernameInput:'',
             passwordInput:'',
             repasswordInput:'',
@@ -77,6 +87,20 @@ export default {
       regist(){
         if(this.checkUsername() && this.checkPassword()&& this.checkRepassword() && this.checkEmail() && this.checkEmailVerifyCode()){
           //发送注册请求
+          let params = new URLSearchParams();
+          params.append('userId',this.userIdInput);
+          params.append('userName',this.usernameInput);
+          params.append('password',this.passwordInput);
+          params.append('rePassword',this.repasswordInput);
+          params.append('eMail',this.emailAddressInput);
+          params.append('mailCode',this.emailVerifyCodeInput);
+          this.$axios.post('/userSystem/user',params)
+            .then( res => {
+              console.log(res);
+              if(res.data.status == 1){
+                this.$router.replace({name:'homeLink'});
+              }
+            })
         }
       },
       //检查用户名
@@ -133,8 +157,33 @@ export default {
       //给邮箱发送验证码
       verifyEmail(){
         if(this.checkEmail()){
+          this.$notify({
+            title:'请稍后',
+            message: '这可能需要一段时间，请稍等',
+            type: 'info'
+          })
           //发送验证码请求
-          
+          this.$axios.get('/userSystem/user/eMailCode',{
+            params:{
+              eMail:this.emailAddressInput
+            }
+          })
+            .then( res => {
+              //发送成功
+              if(res.data.status == 1){
+                this.$notify({
+                  title: '成功',
+                  message: '验证码发送成功，请前往邮箱检查',
+                  type: 'success'
+                })
+              }else{
+                this.$notify({
+                  title: '失败',
+                  message: '验证码发送失败，请稍后重试',
+                  type: 'waring'
+                })
+              }
+            } )
         }
       }
     }
@@ -181,7 +230,7 @@ export default {
         padding-top: 30px;
     }
     .reg{
-        padding-top: 80px;
+        padding-top: 60px;
     }
 </style>
 

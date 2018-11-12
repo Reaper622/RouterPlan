@@ -85,12 +85,11 @@ export default {
         }else{
           console.log(this.usernameInput + '   ' + this.passwordInput + ' ' + this.verifyInput);
           let params = new URLSearchParams();
-          params.append('userName',this.usernameInput);
+          params.append('userId',this.usernameInput);
           params.append('password',this.passwordInput);
           params.append('code',this.verifyInput);
 
           this.$axios.post('/userSystem/session/user',params)
-          //this.$axios.post('/demo',params)
             .then(res => {
               console.log(res);
           //   if (res.data.status == 1) {
@@ -107,7 +106,19 @@ export default {
         }
       },
       verifyCode(){
-        this.verifyCodeURL = 'http://172.22.1.181:8080/RoutePlanSystem/userSystem/verifyCode';
+        this.$axios.get('/userSystem/verifyCode',{
+          responseType: 'arraybuffer'
+        })
+          .then( res => {
+            return 'data:image/png;base64,' + btoa(
+              new Uint8Array(res.data)
+                .reduce((data, byte) => data + String.fromCharCode(byte),'')
+            )
+          })
+          .then(data => {
+            console.log(data);
+            this.verifyCodeURL = data;
+          })
       }
     }
 }
