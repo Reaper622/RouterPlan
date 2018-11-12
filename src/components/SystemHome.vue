@@ -124,8 +124,7 @@ export default {
     }
     .el-main {
         margin-top: 10px;
-        min-height: 900px;
-        height: 100%;
+        height: 1000px;
     }
     .el-footer{
         height: 60px;
