@@ -13,7 +13,8 @@
         <br>
         <br>
 
-        <car v-for="car in cars" :key="car.id"
+        <car v-for="car in cars" :key="car.vehicleId"
+            :vehicle-id="car.vehicleId"
             :type="car.type"
             :capacity="car.capacity"
             :oil="car.oil"
@@ -28,12 +29,7 @@ export default {
     data() {
       return{
         searchVehicleId: '',//搜索车辆的Id
-        cars:[
-          {id:1, type: '货车', capacity: 200.05, oil: 5.5, price: 200.5, delFlag: 0},
-          {id:2, type: '面包车', capacity: 100.15, oil: 2.0, price: 150.5, delFlag: 1},
-          {id:3, type: '大货车', capacity: 300.15, oil: 7.0, price: 3000.5, delFlag: 1},
-          {id:4, type: '大货车', capacity: 300.15, oil: 7.0, price: 3000.5, delFlag: 1}
-        ]
+        cars:[]
       }
     },
     components: {
@@ -41,36 +37,37 @@ export default {
     },
     methods: {
       addCarIt() {
-        console.log('addcar');
         this.$emit('addCar');
+        this.loadCarInfo();
       },
       deleteCarIt() {
-        this.$prompt('请输入要删除的车辆ID','删除车辆',{
-          confirmButtonText: '确认删除',
+        this.$confirm("你确定要删除所选择的车辆","提示",{
+          confirmButtonText: '确定',
           cancelButtonText: '取消',
-          inputPattern: /^[0-9]*$/,
-          inputErrorMessage: '车辆ID只能为数字'
-        }).then(({value}) => {
-          this.$message({
-            type: 'success',
-            message: '你已经删除' + value
-          });
+          type: 'warning'
+        }).then( () => {
+          //批量删除
+          console.log(this.$store.getters.getDeleteArray)
         }).catch(() => {
           this.$message({
-            type: 'info',
-            message: '你已取消删除'
+            type:'info',
+            message:'您已取消删除'
           })
         })
       },
+      loadCarInfo(){
+        this.$axios({
+          methods:'get',
+          url:'/vehicleSystem/user/vehicle',
+        })
+          .then( (res) => {
+            console.log(res);
+            this.cars = res.data.status;
+          })
+      }
     },
     mounted(){
-      this.$axios({
-        methods:'get',
-        url:'/vehicleSystem/user/vehicle',
-      })
-      .then( (res) => {
-        
-      })
+      this.loadCarInfo();
       //加载完成触发已加载事件
       this.$emit('loaded');
     }

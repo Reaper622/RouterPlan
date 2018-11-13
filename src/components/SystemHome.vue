@@ -28,8 +28,13 @@
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </el-col>
-                        <el-col :span="4">
+                        <el-col :span="3">
                             <span class="username">欢迎,{{username}}</span>
+                        </el-col>
+                        <el-col :span="3">
+                          <el-tooltip class="item" effect="dark" content="注销" placement="bottom">
+                           <el-button type="danger" icon="el-icon-close" @click="logout" >注销</el-button>
+                          </el-tooltip>
                         </el-col>
                     </el-row>
                 </el-row>
@@ -100,6 +105,33 @@ export default {
       },
       isLoaded(){
           this.isLoading = false
+      },
+      logout(){
+        this.$confirm("您确定要注销当前账号?","提示",{
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          //注销请求
+          this.$axios.delete('/userSystem/session/user')
+            .then( res => {
+              if(res.data.status == 1){
+                this.$store.commit('logoutState',null)
+                this.$router.replace({name:'loginLink'})
+              }else{
+                this.$notify({
+                  title: '失败',
+                  message: '注销失败',
+                  type: 'waring'
+                })
+              }
+            })
+        }).catch(() => {
+          this.$message({
+            type:'info',
+            message:'您已取消注销'
+          })
+        })
       }
     }
 }

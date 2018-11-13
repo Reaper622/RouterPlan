@@ -92,16 +92,16 @@ export default {
           this.$axios.post('/userSystem/session/user',params)
             .then(res => {
               console.log(res);
-          //   if (res.data.status == 1) {
-          //     //把登录信息存入state
-          //     this.$store.commit('loginState',{uid:this.usernameInput});
-          //     this.$router.replace({name:'homeLink'});
-          //   }else{
-          //     this.$alert('登录失败!','通知',{
-          //     confirmButtonText:'我知道了',
-          //     type:'error'
-          //   })
-          // }
+            if (res.data.status == 1) {
+              //把登录信息存入state
+              this.$store.commit('loginState',this.usernameInput);
+              this.$router.replace({name:'homeLink'});
+            }else{
+              this.$alert('登录失败!','通知',{
+              confirmButtonText:'我知道了',
+              type:'error'
+            })
+          }
         })
         }
       },
