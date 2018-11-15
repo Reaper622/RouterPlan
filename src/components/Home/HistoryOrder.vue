@@ -9,7 +9,11 @@
         </el-input>
         <br>
         <br>
-        <order :versions="versions"></order>
+        <order v-for="question in questions" :key="question.questionId"
+        :question-id="question.questionId"
+        :question-name="question.questionName"
+        :user-id="question.userId"
+        :del-flag="question.delFlag"></order>
     </div>
 </template>
 <script>
@@ -18,74 +22,30 @@ export default {
     data() {
         return{
             searchOrderId:'',
-            //展示历史订单要用的数据
-            versions:[
-          {
-          id:1,
-          solutions:[
-            {
-              finalSolutionId:1,
-              routes:[
-                {id:1},
-                {id:2}
-              ],
-              totalDis:100,
-              userChoice:0,
-              createTime:"2018-11-11 12:00:00"
-            },
-            {
-              finalSolutionId:2,
-              routes:[
-                {id:1},
-                {id:2}
-              ],
-              totalDis:100,
-              userChoice:1,
-              createTime:"2018-11-11 12:00:00"
-            },
-            {
-              finalSolutionId:3,
-              routes:[
-                {id:1},
-                {id:2}
-              ],
-              totalDis:100,
-              userChoice:1,
-              createTime:"2018-11-11 12:00:00"
-            },
-            {
-              finalSolutionId:4,
-              routes:[
-                {id:1},
-                {id:2}
-              ],
-              totalDis:100,
-              userChoice:1,
-              createTime:"2018-11-11 12:00:00"
-            }
-          ]
-      },
-        {id:2,
-        solutions:[
-        {
-          finalSolutionId:1,
-          routes:[
-            {id:1},
-            {id:2}
-          ],
-          totalDis:100,
-          userChoice:0,
-          createTime:"2018-11-11 12:00:00"
-        }
-      ]},
-        {id:3},
-        {id:4},
-        {id:5}
-      ]
+            //问题数组
+            questions:[],
         }
     },
     components:{
         Order
+    },
+    mounted(){
+      this.loadQuestions();
+      //加载完成
+      this.$emit('loaded');
+    },
+    methods:{
+      //得到所有问题
+      loadQuestions(){
+         this.$axios.get("/question/getQuestions",{
+        params:{
+          userId: 1
+        }
+      })
+      .then( res => {
+        this.questions = res.data.object;
+      })
+      }
     }
 }
 </script>

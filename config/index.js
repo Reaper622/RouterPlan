@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/RoutePlanSystem': {
-        target: 'http://172.22.1.181:8080',
+        target: 'http://47.107.65.249:8081',
         changeOrigin: true,
       },
     },

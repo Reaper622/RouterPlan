@@ -20,15 +20,32 @@
 <script>
 import Version from './Version.vue'
 export default {
-  props:['questionId','questionName','userId','delFlag','versions'],
+  props:['questionId','questionName','userId','delFlag'],
   data(){
     return{
-
+      versions:[],
     }
   },
   components:{
     Version
-  }
+  },
+  mounted(){
+    this.loadVersions();
+  },
+  methods:{
+    //获取该问题的所有版本
+    loadVersions(){
+      this.$axios.get('/finalSolution/getAllVersion',{
+        params:{
+          questionId:this.questionId
+        }
+      })
+      .then( res => {
+        console.log(res);
+      })
+    }
+  },
+
 
 }
 </script>
