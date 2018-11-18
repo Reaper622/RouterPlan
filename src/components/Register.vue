@@ -65,6 +65,9 @@
                 <el-col :span="6">
                     <el-button type="primary" size="medium" @click="regist">立 即 注 册</el-button>
                 </el-col>
+                <el-col :span="6" :offset="2">
+                    <el-button  size="medium" @click="toLogin">前 去 登 录</el-button>
+                </el-col>
             </el-row>
         </div>
     </div>
@@ -83,6 +86,10 @@ export default {
         }
     },
     methods:{
+      //跳转到登录界面
+      toLogin(){
+        this.$router.replace({name:'loginLink'});
+      },
       //注册事件
       regist(){
         if(this.checkUsername() && this.checkPassword()&& this.checkRepassword() && this.checkEmail() && this.checkEmailVerifyCode()){

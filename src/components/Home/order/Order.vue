@@ -9,8 +9,9 @@
         </div>
         <div class="versionContainer">
           <version v-for="(version,index) in versions" :key="index"
-                  :version-id="version.id"
-                  :solutions="version.solutions"></version>
+                  :question-id="questionId"
+                  :version-id="version"
+                  :solutions="version"></version>
         </div>
         <div class="bottomLine">
         </div>
@@ -42,6 +43,7 @@ export default {
       })
       .then( res => {
         console.log(res);
+        this.versions = res.data.object;
       })
     }
   },
@@ -55,7 +57,6 @@ export default {
         position: relative;
         display: inline-block;
         width: 100%;
-        min-height: 500px;
         height: auto;
         border: 1px solid #EBEEF5;
         border-radius: 10px;
@@ -88,7 +89,7 @@ export default {
       position: relative;
       top:60px;
       width: 100%;
-      min-height: 800px;
+      min-height: 500px;
       height: auto;
       background: #E8E8E8;
     }

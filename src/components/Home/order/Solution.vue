@@ -54,12 +54,14 @@
 
 <script>
 export default {
-  props:['finalSolutionId','totalDis','userChoice','createTime'],
+  props:['finalSolutionId','totalDis','userChoice','createTime','routes'],
   data(){
     return{
-
     }
-  }
+  },
+  mounted(){
+
+  },
 
 }
 </script>

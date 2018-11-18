@@ -8,7 +8,8 @@
         :final-solution-id="solution.finalSolutionId"
         :total-dis="solution.totalDis"
         :user-choice="solution.userChoice"
-        :create-time="solution.createTime">
+        :create-time="solution.createTime"
+        :routes="solution.routes">
       </solution>
     </div>
   </div>
@@ -17,13 +18,30 @@
 <script>
 import Solution from './Solution.vue'
 export default {
-  props:['versionId','solutions'],
+  props:['versionId','questionId'],
   data(){
     return {
+      solutions:[]
     }
   },
   components:{
     Solution
+  },
+  mounted(){
+    this.loadSolutions()
+  },
+  methods:{
+    loadSolutions(){
+      this.$axios.get('/finalSolution/getOneVersionFinalSolution',{
+        params:{
+          questionId:this.questionId,
+          version:this.versionId
+        }
+      })
+      .then( res => {
+        this.solutions = res.data.object;
+      })
+    }
   }
 }
 </script>

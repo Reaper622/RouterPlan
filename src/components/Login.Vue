@@ -39,7 +39,7 @@
                            </el-input>
                        </el-col>
                        <el-col :span="6" :offset="1">
-                            <img :src="verifyCodeURL" class="verifyCode" v-show="verifyCodeGetted" />
+                            <img :src="verifyCodeURL" class="verifyCode" v-show="verifyCodeGetted" @click="verifyCode" />
                        </el-col>
                    </el-row>
                    <el-row type="flex" class="row buttons" justify="space-around">
