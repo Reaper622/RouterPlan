@@ -87,14 +87,14 @@ export default {
       regist(){
         if(this.checkUsername() && this.checkPassword()&& this.checkRepassword() && this.checkEmail() && this.checkEmailVerifyCode()){
           //发送注册请求
-          let params = new URLSearchParams();
-          params.append('userId',this.userIdInput);
-          params.append('userName',this.usernameInput);
-          params.append('password',this.passwordInput);
-          params.append('rePassword',this.repasswordInput);
-          params.append('eMail',this.emailAddressInput);
-          params.append('mailCode',this.emailVerifyCodeInput);
-          this.$axios.post('/userSystem/user',params)
+          this.$axios.post('/userSystem/user',qs.stringify({
+            userId:this.userIdInput,
+            userName:this.usernameInput,
+            password:this.passwordInput,
+            rePassword:this.repasswordInput,
+            eMail:this.emailAddressInput,
+            mailCode:this.emailVerifyCodeInput
+          }))
             .then( res => {
               console.log(res);
               if(res.data.status == 1){

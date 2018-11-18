@@ -24,6 +24,7 @@
                        <el-col :span="16">
                            <el-input
                            placeholder="输入密码"
+                           type="password"
                            prefix-icon="el-icon-view"
                            v-model="passwordInput">
                            </el-input>
@@ -54,6 +55,7 @@
     </div>
 </template>
 <script>
+import qs from 'qs'
 export default {
     name:'Login',
     data(){
@@ -83,25 +85,33 @@ export default {
             confirmButtonText:'我知道了',
           })
         }else{
-          console.log(this.usernameInput + '   ' + this.passwordInput + ' ' + this.verifyInput);
-          let params = new URLSearchParams();
-          params.append('userId',this.usernameInput);
-          params.append('password',this.passwordInput);
-          params.append('code',this.verifyInput);
-
-          this.$axios.post('/userSystem/session/user',params)
+          this.$axios.post('/userSystem/session/user',qs.stringify({
+            userId:this.usernameInput,
+            password:this.passwordInput,
+            code:this.verifyCode
+          }))
             .then(res => {
               console.log(res);
             if (res.data.status == 1) {
               //把登录信息存入state
               this.$store.commit('loginState',this.usernameInput);
               this.$router.replace({name:'homeLink'});
-            }else{
-              this.$alert('登录失败!','通知',{
+            }else if(res.data.status == 2) {
+              this.$alert('用户名或密码错误!','通知',{
               confirmButtonText:'我知道了',
               type:'error'
-            })
-          }
+              })
+            }else if(res.data.status == 3){
+              this.$alert('验证码错误或为空！','通知',{
+              confirmButtonText:'我知道了',
+              type:'error'
+             })
+            }else {
+              this.$alert('登录失败！','通知',{
+              confirmButtonText:'我知道了',
+              type:'error'
+             })
+            }
         })
         }
       },
