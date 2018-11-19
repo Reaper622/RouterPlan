@@ -47,13 +47,25 @@ export default {
                   type: 'success'
                   })
                   this.$emit('successCar');
+                  this.carInfo = {
+                    type: '',
+                    capacity: null,
+                    oil: null,
+                    price: null,
+                  }
                 }else{
                   this.$notify({
                   title: '失败',
                   message: '添加失败，请稍后重试',
                   type: 'waring'
                   })
-                  this.$emit('cancelCar')
+                  this.$emit('cancelCar');
+                  this.carInfo = {
+                    type: '',
+                    capacity: null,
+                    oil: null,
+                    price: null,
+                  }
                 }
               })
         },

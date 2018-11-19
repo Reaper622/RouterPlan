@@ -12,7 +12,7 @@
                     </el-col>
                     <el-row class="headerRightRow" type="flex" justify="end">
                         <el-col :span="2">
-                            <el-badge :value="5"  class="item">
+                            <el-badge :value="0"  class="item">
                                 <el-button icon="el-icon-bell"  circle></el-button>
                             </el-badge>
                         </el-col>
@@ -65,7 +65,7 @@
                     </el-menu>
                 </el-aside>
                 <el-container>
-                    <el-main v-loading="isLoading"><router-view @addCar="addCarShow" @loaded="isLoaded"></router-view></el-main>
+                    <el-main v-loading="isLoading"><router-view @addCar="addCarShow" @loaded="isLoaded" ref="ref"></router-view></el-main>
                     <!-- <el-footer>
                         &copy;Copyright:2018 Mis Lab
                     </el-footer> -->
@@ -101,7 +101,8 @@ export default {
           this.addCarState = true
       },
       addCarFade(){
-          this.addCarState = false
+          this.addCarState = false;
+          this.$refs.ref.loadCarInfo();
       },
       isLoaded(){
           this.isLoading = false

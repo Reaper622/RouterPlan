@@ -3,7 +3,7 @@
         <div class="title">
           <span class="questionId">订单号:{{questionId}} 订单名称:{{questionName}}</span>
            <el-tooltip class="item" effect="dark" content="删除" placement="top">
-            <el-button type="danger" icon="el-icon-delete" circle class="deleteButton"></el-button>
+            <el-button type="danger" icon="el-icon-delete" circle class="deleteButton" @click="deleteQuestion" ></el-button>
            </el-tooltip>
           <span class="time">2018-11-11</span>
         </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import qs from 'qs'
 import Version from './Version.vue'
 export default {
   props:['questionId','questionName','userId','delFlag'],
@@ -36,19 +37,25 @@ export default {
   methods:{
     //获取该问题的所有版本
     loadVersions(){
-      this.$axios.get('/finalSolution/getAllVersion',{
-        params:{
-          questionId:this.questionId
-        }
-      })
+      this.$axios.get('/finalSolution/getAllVersion',qs.stringify({
+        questionId:this.questionId
+      }))
       .then( res => {
         console.log(res);
         this.versions = res.data.object;
       })
+    },
+    deleteQuestion(){
+      this.$axios.delete('/question/removeQuestion',{
+        data:qs.stringify({
+          questionId:this.questionId
+        })
+      })
+      .then( res => {
+        console.log(res);
+      })
     }
   },
-
-
 }
 </script>
 
@@ -62,6 +69,7 @@ export default {
         border-radius: 10px;
         transition: box-shadow .3s ease;
         overflow: hidden;
+        margin-bottom: 20px;
     }
     .order::-webkit-scrollbar{
       width: 0 !important

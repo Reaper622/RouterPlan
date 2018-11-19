@@ -49,7 +49,7 @@
                             </el-input>
                        </el-col>
                        <el-col :span="1" :offset="1">
-                           <el-button type="primary"  icon="el-icon-message" @click="verifyEmail">验证邮箱</el-button>
+                           <el-button type="primary"  icon="el-icon-message" @click="verifyEmail" :loading="emailLoading">验证邮箱</el-button>
                        </el-col>
             </el-row>
             <el-row  class="row" >
@@ -82,7 +82,8 @@ export default {
             passwordInput:'',
             repasswordInput:'',
             emailAddressInput:'',
-            emailVerifyCodeInput:''
+            emailVerifyCodeInput:'',
+            emailLoading:false,//验证邮箱加载
         }
     },
     methods:{
@@ -164,6 +165,10 @@ export default {
       //给邮箱发送验证码
       verifyEmail(){
         if(this.checkEmail()){
+            this.emailLoading = true;
+            setTimeout(() => {
+              this.emailLoading = false
+            },7000);
           this.$notify({
             title:'请稍后',
             message: '这可能需要一段时间，请稍等',

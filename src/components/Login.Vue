@@ -88,7 +88,7 @@ export default {
           this.$axios.post('/userSystem/session/user',qs.stringify({
             userId:this.usernameInput,
             password:this.passwordInput,
-            code:this.verifyCode
+            code:this.verifyInput
           }))
             .then(res => {
               console.log(res);

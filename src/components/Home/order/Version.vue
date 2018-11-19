@@ -40,6 +40,7 @@ export default {
       })
       .then( res => {
         this.solutions = res.data.object;
+        console.log(res);
       })
     }
   }
