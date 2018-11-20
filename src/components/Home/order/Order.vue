@@ -37,9 +37,12 @@ export default {
   methods:{
     //获取该问题的所有版本
     loadVersions(){
-      this.$axios.get('/finalSolution/getAllVersion',qs.stringify({
-        questionId:this.questionId
-      }))
+      this.$axios.get('/finalSolution/getAllVersion',{
+        params:{
+          questionId:this.questionId
+        }
+      }
+      )
       .then( res => {
         console.log(res);
         this.versions = res.data.object;
@@ -47,12 +50,13 @@ export default {
     },
     deleteQuestion(){
       this.$axios.delete('/question/removeQuestion',{
-        data:qs.stringify({
+        params:{
           questionId:this.questionId
-        })
+        }
       })
       .then( res => {
         console.log(res);
+        this.$emit('refresh');
       })
     }
   },

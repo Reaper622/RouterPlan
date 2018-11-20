@@ -1,12 +1,12 @@
 <template>
   <div class="solution">
     <el-row type="flex" class="row">
-      <el-col :span="8" :offset="1">
-        <div class="title">
+      <el-col :span="12" :offset="1">
+        <div>
           方案{{finalSolutionId}}
         </div>
       </el-col>
-      <el-col :span="6" :offset="8">
+      <el-col :span="6" :offset="0">
         <div class="">
           <el-button type="primary" plain size="mini">查看</el-button>
         </div>
@@ -23,19 +23,14 @@
           总距离:
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="14">
         <div class="">
           {{totalDis}}
         </div>
       </el-col>
-      <el-col :span="6">
-        <div class="">
-
-        </div>
-      </el-col>
     </el-row>
     <el-row type="flex" class="row" justify="space-around">
-      <el-col :span="6">
+      <el-col :span="8">
         <div class="">
           创建时间:
         </div>
@@ -77,9 +72,6 @@ export default {
   .row{
     height: 30px;
     line-height: 30px;
-  }
-  .title{
-    font-size: 20px;
   }
   .choiceRow{
     width: 100%;

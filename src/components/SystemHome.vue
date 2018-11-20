@@ -82,7 +82,7 @@ export default {
     name:'systemHome',
     data(){
         return{
-            username:'李博文',
+            username:this.$store.getters.getUsername,
             addCarState: false,
             isLoading: true
         }

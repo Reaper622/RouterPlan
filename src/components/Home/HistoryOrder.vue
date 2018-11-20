@@ -13,7 +13,8 @@
         :question-id="question.questionId"
         :question-name="question.questionName"
         :user-id="question.userId"
-        :del-flag="question.delFlag"></order>
+        :del-flag="question.delFlag"
+        @refresh="loadQuestions"></order>
     </div>
 </template>
 <script>
