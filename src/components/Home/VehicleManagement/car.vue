@@ -12,12 +12,12 @@
       </el-col>
     </el-row>
     <el-row class="attributeRow">
-      <el-col :span="8" :offset="2">车辆类型:{{type}}</el-col>
-      <el-col :span="8" :offset="2">载货量:{{capacity}}</el-col>
+      <el-col :span="10" :offset="2">车辆类型:{{type}}</el-col>
+      <el-col :span="10" :offset="0">载货量:{{capacity}}</el-col>
     </el-row>
     <el-row class="attributeRow">
-      <el-col :span="8" :offset="2">排量: {{oil}}t</el-col>
-      <el-col :span="8" :offset="2">价格: {{price}}元/次</el-col>
+      <el-col :span="10" :offset="2">排量: {{oil}}t</el-col>
+      <el-col :span="10" :offset="0">价格: {{price}}元/次</el-col>
     </el-row>
     <div :class="[ delFlag === 0 ? '' : 'flag onTheWay']">{{delFlag === 0 ? '' : '已删除'}}</div>
   </div>

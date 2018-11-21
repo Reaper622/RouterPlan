@@ -13,7 +13,7 @@
       </el-col>
       <el-col :span="6">
         <div class="">
-          <el-button type="danger" plain size="mini">删除</el-button>
+          <el-button type="danger" plain size="mini" @click="deleteSolution">删除</el-button>
         </div>
       </el-col>
     </el-row>
@@ -57,6 +57,18 @@ export default {
   mounted(){
 
   },
+  methods:{
+    deleteSolution() {
+      this.$axios.delete('/finalSolution/removeFinalSolution',{
+        params:{
+          finalSolutionId:this.finalSolutionId
+        }
+      })
+      .then(res => {
+
+      })
+    }
+  }
 
 }
 </script>

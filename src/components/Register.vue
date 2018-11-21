@@ -107,7 +107,7 @@ export default {
             .then( res => {
               console.log(res);
               if(res.data.status == 1){
-                this.$router.replace({name:'homeLink'});
+                this.$router.replace({name:'loginLink'});
               }
             })
         }

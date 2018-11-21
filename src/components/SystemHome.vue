@@ -82,10 +82,13 @@ export default {
     name:'systemHome',
     data(){
         return{
-            username:this.$store.getters.getUsername,
+            username:null,
             addCarState: false,
             isLoading: true
         }
+    },
+    mounted(){
+      this.username = this.$store.getters.getUserName
     },
     components:{
         AddCar
@@ -117,7 +120,7 @@ export default {
           this.$axios.delete('/userSystem/session/user')
             .then( res => {
               if(res.data.status == 1){
-                this.$store.commit('logoutState',null)
+                this.$store.commit('logoutState',null,null)
                 this.$router.replace({name:'loginLink'})
               }else{
                 this.$notify({

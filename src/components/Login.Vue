@@ -94,7 +94,7 @@ export default {
               console.log(res);
             if (res.data.status == 1) {
               //把登录信息存入state
-              this.$store.commit('loginState',this.usernameInput);
+              this.$store.commit('loginState',this.usernameInput,res.data.userMessage.userName);
               this.$router.replace({name:'homeLink'});
             }else if(res.data.status == 2) {
               this.$alert('用户名或密码错误!','通知',{
@@ -106,6 +106,7 @@ export default {
               confirmButtonText:'我知道了',
               type:'error'
              })
+              this.verifyCode(); //再次请求验证码
             }else {
               this.$alert('登录失败！','通知',{
               confirmButtonText:'我知道了',

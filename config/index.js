@@ -11,11 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/RoutePlanSystem': {
-      //   //target: 'http://47.107.65.249:8081',
-      //   target: 'http://192.168.43.115:8081',
-      //   changeOrigin: true ,
-      // },
+      '/RoutePlanSystem': {
+        target: 'http://47.107.65.249:8081',
+        changeOrigin: true ,
+      },
     },
 
     // Various Dev Server settings

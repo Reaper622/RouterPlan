@@ -19,7 +19,7 @@ export default () => {
         state.userId = userId
         state.userName = userName
       },
-      logoutState (state, userId) { // 第一个参数为state，第二个为传递的参数
+      logoutState (state, userId, userName) { // 第一个参数为state，第二个为传递的参数
         // 删除sessionStorage内存储的userId
         sessionStorage.removeItem('userId')
         sessionStorage.removeItem('userName')
@@ -51,7 +51,7 @@ export default () => {
       getUserName (state) {
         if (state.userName == null) {
           // 如果state内为空就去查询sessionStorage内的userId
-          state.userId = sessionStorage.getItem('userName')
+          state.userName = sessionStorage.getItem('userName')
         }
         return state.userName
       },
