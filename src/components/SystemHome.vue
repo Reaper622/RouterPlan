@@ -120,7 +120,7 @@ export default {
           this.$axios.delete('/userSystem/session/user')
             .then( res => {
               if(res.data.status == 1){
-                this.$store.commit('logoutState',null,null)
+                this.$store.commit('logoutState')
                 this.$router.replace({name:'loginLink'})
               }else{
                 this.$notify({

@@ -94,7 +94,7 @@ export default {
               console.log(res);
             if (res.data.status == 1) {
               //把登录信息存入state
-              this.$store.commit('loginState',this.usernameInput,res.data.userMessage.userName);
+              this.$store.commit('loginState',{userId:this.usernameInput, userName:res.data.userMessage.userName});
               this.$router.replace({name:'homeLink'});
             }else if(res.data.status == 2) {
               this.$alert('用户名或密码错误!','通知',{

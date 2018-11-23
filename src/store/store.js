@@ -12,19 +12,19 @@ export default () => {
       userName: null
     },
     mutations: {
-      loginState (state, userId, userName) { // 第一个参数为state，第二个为传递的参数
+      loginState (state, user) { // 第一个参数为state，第二个为传递的参数
         // 用sessionStorage存储登录userId可防止用户刷新后state内登录态清空
-        sessionStorage.setItem('userId', userId)
-        sessionStorage.setItem('userName', userName)
-        state.userId = userId
-        state.userName = userName
+        sessionStorage.setItem('userId', user.userId)
+        sessionStorage.setItem('userName', user.userName)
+        state.userId = user.userId
+        state.userName = user.userName
       },
-      logoutState (state, userId, userName) { // 第一个参数为state，第二个为传递的参数
+      logoutState (state) { // 第一个参数为state，第二个为传递的参数
         // 删除sessionStorage内存储的userId
         sessionStorage.removeItem('userId')
         sessionStorage.removeItem('userName')
-        state.userId = userId
-        state.userName = userName
+        state.userId = null
+        state.userName = null
       },
       // 添加批量删除数组的内容
       deleteArrayAdd (state, deleteId) {

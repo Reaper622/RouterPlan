@@ -38,14 +38,14 @@ export default {
     methods:{
       //得到所有问题
       loadQuestions(){
-         this.$axios.get("/question/getQuestions",{
+        this.$axios.get("/question/getQuestions",{
         params:{
           userId: 1
         }
-      })
-      .then( res => {
-        this.questions = res.data.object;
-      })
+        })
+        .then( res => {
+          this.questions = res.data.object;
+        })
       }
     }
 }

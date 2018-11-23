@@ -4,7 +4,7 @@
             <div class="pageTitle">车辆信息录入</div>
             <el-form ref="form" :model="carInfo" label-width="100px" class="pageForm">
                 <el-form-item label="车辆类型">
-                    <el-input v-model="carInfo.type" class="pageInput"></el-input>
+                    <el-input v-model="carInfo.type" class="pageInput" maxlength="5"></el-input>
                 </el-form-item>
                 <el-form-item label="汽车载货量">
                     <el-input v-model="carInfo.capacity" class="pageInput"></el-input>
