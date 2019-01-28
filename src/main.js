@@ -30,18 +30,18 @@ const router = new VueRouter({
   }
 })
 
-// 路由守卫，检测是否已经登录
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireLogin) { // 如果前往页面需要登录
-    if (store.getters.getUserId == null) { // 未登录
-      next('/login')// 跳转到登录界面
-    } else { // 已登录
-      next()
-    }
-  } else { // 前往页面不需要登录
-    next()
-  }
-})
+// // 路由守卫，检测是否已经登录
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.requireLogin) { // 如果前往页面需要登录
+//     if (store.getters.getUserId == null) { // 未登录
+//       next('/login')// 跳转到登录界面
+//     } else { // 已登录
+//       next()
+//     }
+//   } else { // 前往页面不需要登录
+//     next()
+//   }
+// })
 
 /* eslint-disable no-new */
 new Vue({

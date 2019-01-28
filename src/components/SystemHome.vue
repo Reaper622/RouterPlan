@@ -50,6 +50,10 @@
                         text-color="#fff"
                         active-text-color="#409EFF"
                         :router="true">
+                        <el-menu-item index="/home/canvas">
+                            <i class="el-icon-menu"></i>
+                            <span slot="title">路径演示</span>
+                        </el-menu-item>
                         <el-menu-item index="/home/vehicleManagement">
                             <i class="el-icon-menu"></i>
                             <span slot="title">车辆管理</span>
