@@ -6,8 +6,8 @@
         <el-step title="选择车辆" ></el-step>
         <el-step title="路径展示" ></el-step>
       </el-steps>
-
-
+      <select-center></select-center>
+      <!-- <select-route-point></select-route-point> -->
   </div>
 </template>
 <script>
