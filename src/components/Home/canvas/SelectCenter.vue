@@ -6,18 +6,39 @@
             当前浏览器不支持Canvas，请升级浏览器或更换浏览器访问。
           </canvas>
         </el-col>
-        <el-col :span="4" class="side"></el-col>
+        <el-col :span="4" class="side">
+          <el-row class="pointInfo" v-for="point in points" :key="point.index" type="flex" justify="space-between">
+            <el-col :span="4" class="index">
+              <el-tag >{{point.index}}</el-tag>
+            </el-col>
+            <el-col :span="12" class="xy">
+              X:{{point.x}}&nbsp;&nbsp;Y:{{point.y}}
+            </el-col>
+            <el-col :span="4">
+              <el-button type="danger" icon="el-icon-delete" circle @click="deletePoint(--point.index)"></el-button>
+            </el-col>
+          </el-row>
+        </el-col>
       </el-row>
   </div>
 </template>
 
 <script>
+//计数器
 export default {
   data () {
     return {
       canvas : null,
       ctx : null,
       points:[]
+    }
+  },
+  watch: {
+    //给点数组添加索引
+    points(){
+      for(let i =0;i < this.points.length;i++){
+        this.points[i].index = i+1;
+      }
     }
   },
   mounted(){
@@ -29,29 +50,45 @@ export default {
       this.ctx = this.canvas.getContext('2d');
     },
     //画点，传递渲染上下文、x坐标、y坐标、半径
-    drawPoint(ctx,x,y,radius) {
+    drawPoint(ctx,x,y,radius,color) {
+      ctx.fillStyle = color;
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI*2, true);
       ctx.fill();
-
     },
     //点击实现画点
     clickToDrawPoint(e){
       //获取坐标
       let coordinate = this.getMousePos(this.canvas, e);
       //画点
-      this.drawPoint(this.ctx, coordinate.x, coordinate.y, 5);
+      this.drawPoint(this.ctx, coordinate.x, coordinate.y, 10,"#409EFF");
       //把点存入数据集
       this.points.push(coordinate);
     },
     //获取在canvas的坐标
     getMousePos(canvas, event) {
-
       let rect = canvas.getBoundingClientRect();
       //保证画布的像素值和显示在页面上的尺寸不一致的情况下，也能够正确获取到鼠标相对于canvas中的坐标
       let x = event.clientX - rect.left * (canvas.width / rect.width);
       let y = event.clientY - rect.top * (canvas.height / rect.height);
       return {x:x,y:y}
+    },
+    //删除数组指定位置的元素,并在原来的点区域画一个与底部颜色相同的点来
+    deletePoint(index){
+      if (isNaN(index) || index > this.points.length ) {return false}
+      let point = this.points[index];
+      this.drawPoint(this.ctx,point.x,point.y,10,"#888");
+      for (var i=0,n=0; i < this.points.length; i++ ) {
+        if (this.points[i] != this.points[index]){
+          this.points[n++] = this.points[i]
+        }
+      }
+      this.points.length -= 1;
+      for(let i =0;i < this.points.length;i++){
+        this.points[i].index = i+1;
+      }
+      //数据层过多，手动触发重新渲染
+      this.$forceUpdate();
     }
   }
 }
@@ -66,18 +103,36 @@ export default {
   .canvasMap{
     position: relative;
     height: 100%;
-    overflow-x:scroll;
+    overflow-x:auto;
     overflow-y: hidden;
   }
   .side{
     position: relative;
-    border: 3px solid #888;
+    border: 3px solid #409eff;
     height: 100%;
+    overflow-y: auto;
+    background: #888;
   }
   #map{
     position: absolute;
     cursor: pointer;
     background: #888;
   }
+  .pointInfo{
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+    background: #fff;
+    line-height: 60px;
+  }
+  .pointInfo:last-child{
+    margin-bottom: 0px;
+  }
+  .pointInfo el-col{
+    line-height: 60px;
+  }
+
 </style>
 
