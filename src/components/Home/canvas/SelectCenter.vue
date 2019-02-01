@@ -20,6 +20,11 @@
           </el-row>
         </el-col>
       </el-row>
+      <el-row>
+        <el-col :span="4" :offset="18">
+          <el-button type="success" class="nextStepBtn" @click="storeCenterPoint">成功按钮</el-button>
+        </el-col>
+      </el-row>
   </div>
 </template>
 
@@ -89,6 +94,11 @@ export default {
       }
       //数据层过多，手动触发重新渲染
       this.$forceUpdate();
+    },
+    //点击实现跳转，并把当前中心点传入状态管理
+    storeCenterPoint() {
+      this.$store.commit('setCenterPoints',this.points)
+      this.$emit('toRoutePoint');
     }
   }
 }
@@ -133,6 +143,10 @@ export default {
   .pointInfo el-col{
     line-height: 60px;
   }
-
+  .nextStepBtn{
+    margin-top: 20px;
+    width: 100%;
+    height: 60px;
+  }
 </style>
 

@@ -1,13 +1,15 @@
 <template>
   <div class="main">
-      <el-steps :active="0" finish-status="success" simple style="margin-top: 20px">
+      <el-steps :active="nowPage" finish-status="success" simple style="margin-top: 20px">
         <el-step title="选择中心点" ></el-step>
         <el-step title="选择路径点" ></el-step>
         <el-step title="选择车辆" ></el-step>
         <el-step title="路径展示" ></el-step>
       </el-steps>
-      <select-center></select-center>
-      <!-- <select-route-point></select-route-point> -->
+      <select-center @toRoutePoint="toPage(1)" v-if="nowPage == 0"></select-center>
+      <select-route-point @toCenterPoint="toPage(0)" v-else-if="nowPage == 1"></select-route-point>
+      <select-vehicle v-else-if="nowPage == 2"></select-vehicle>
+      <show-route v-else></show-route>
   </div>
 </template>
 <script>
@@ -18,7 +20,12 @@ import ShowRoute from './canvas/showRoute'
 export default {
   data: () => {
     return {
-
+      nowPage:0,
+    }
+  },
+  methods: {
+    toPage(index) {
+      this.nowPage = index;
     }
   },
   components: {
