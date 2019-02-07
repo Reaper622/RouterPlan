@@ -7,8 +7,8 @@
         <el-step title="路径展示" ></el-step>
       </el-steps>
       <select-center @toRoutePoint="toPage(1)" v-if="nowPage == 0"></select-center>
-      <select-route-point @toCenterPoint="toPage(0)" v-else-if="nowPage == 1"></select-route-point>
-      <select-vehicle v-else-if="nowPage == 2"></select-vehicle>
+      <select-route-point @toCenterPoint="toPage(0)" @toSelectVehicle="toPage(2)" v-else-if="nowPage == 1"></select-route-point>
+      <select-vehicle  v-else-if="nowPage == 2" @addCarCanvas="addCarToHome"  ></select-vehicle>
       <show-route v-else></show-route>
   </div>
 </template>
@@ -26,6 +26,9 @@ export default {
   methods: {
     toPage(index) {
       this.nowPage = index;
+    },
+    addCarToHome() {
+      this.$emit('addCar');
     }
   },
   components: {

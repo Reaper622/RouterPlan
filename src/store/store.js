@@ -11,7 +11,8 @@ export default () => {
       deleteArray: [],
       userName: null,
       // 二维数组使用
-      centerPoints: []
+      centerPoints: [],
+      routePoints: []
     },
     mutations: {
       loginState (state, user) { // 第一个参数为state，第二个为传递的参数
@@ -44,6 +45,10 @@ export default () => {
       // 添加中心点
       setCenterPoints (state, points) {
         state.centerPoints = points
+      },
+      // 添加路径点
+      setRoutePoints (state,points) {
+        state.routePoints = points
       }
     },
     getters: {
@@ -64,8 +69,11 @@ export default () => {
       getDeleteArray (state) {
         return state.deleteArray
       },
-      getCenterPoints (state, points) {
+      getCenterPoints (state) {
         return state.centerPoints
+      },
+      getRoutePoints (state) {
+        return state.routePoints
       }
     }
   })

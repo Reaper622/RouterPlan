@@ -25,7 +25,7 @@
           <el-button type="info" class="lastStepBtn" @click="toLastStep">返回上一步</el-button>
         </el-col>
         <el-col :span="4" :offset="1">
-          <el-button type="success" class="nextStepBtn" @click="storeCenterPoint">选择路径点</el-button>
+          <el-button type="success" class="nextStepBtn" @click="storeCenterPoint">选择车辆</el-button>
         </el-col>
       </el-row>
   </div>
@@ -112,8 +112,8 @@ export default {
     },
     //点击实现跳转，并把当前中心点传入状态管理
     storeCenterPoint() {
-      this.$store.commit('setCenterPoints',this.points)
-      this.$emit('toRoutePoint');
+      this.$store.commit('setRoutePoints',this.points);
+      this.$emit('toSelectVehicle');
     }
   }
 }
