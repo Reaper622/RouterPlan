@@ -38,8 +38,10 @@ export default {
     },
     methods: {
         onSubmit(){
-            this.$axios.post('/vehicleSystem/user/vehicle',this.carInfo)
-              .then( res => {
+          //二维路径
+          if(window.location.hash == "#/home/canvas"){
+            this.$axios.post('',this.carInfo)
+            .then( res => {
                 if(res.data.status == 1){
                   this.$notify({
                   title: '成功',
@@ -68,6 +70,40 @@ export default {
                   }
                 }
               })
+          }
+          //车辆管理
+          else{
+             this.$axios.post('/vehicleSystem/user/vehicle',this.carInfo)
+             .then( res => {
+                if(res.data.status == 1){
+                  this.$notify({
+                  title: '成功',
+                  message: '添加成功',
+                  type: 'success'
+                  })
+                  this.$emit('successCar');
+                  this.carInfo = {
+                    type: '',
+                    capacity: null,
+                    oil: null,
+                    price: null,
+                  }
+                }else{
+                  this.$notify({
+                  title: '失败',
+                  message: '添加失败，请稍后重试',
+                  type: 'waring'
+                  })
+                  this.$emit('cancelCar');
+                  this.carInfo = {
+                    type: '',
+                    capacity: null,
+                    oil: null,
+                    price: null,
+                  }
+                }
+              })
+          }
         },
         cancel(){
             this.$emit('cancelCar')

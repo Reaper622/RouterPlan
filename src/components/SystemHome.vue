@@ -109,7 +109,11 @@ export default {
       },
       addCarFade(){
           this.addCarState = false;
-          this.$refs.ref.loadCarInfo();
+          if(window.location.hash == '#/home/vehicleManagement'){
+            this.$refs.ref.loadCarInfo();
+          }else{
+
+          }
       },
       isLoaded(){
           this.isLoading = false

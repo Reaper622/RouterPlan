@@ -23,7 +23,9 @@ import Car from '../VehicleManagement/car.vue'
 export default {
   data() {
     return {
-      cars: []
+      cars: [
+
+      ]
     }
   },
   methods: {
