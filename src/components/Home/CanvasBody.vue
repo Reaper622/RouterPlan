@@ -3,19 +3,19 @@
       <el-steps :active="nowPage" finish-status="success" simple style="margin-top: 20px">
         <el-step title="选择中心点" ></el-step>
         <el-step title="选择路径点" ></el-step>
-        <el-step title="选择车辆" ></el-step>
+        <!-- <el-step title="选择车辆" ></el-step> -->
         <el-step title="路径展示" ></el-step>
       </el-steps>
       <select-center @toRoutePoint="toPage(1)" v-if="nowPage == 0"></select-center>
       <select-route-point @toCenterPoint="toPage(0)" @toSelectVehicle="toPage(2)" v-else-if="nowPage == 1"></select-route-point>
-      <select-vehicle  v-else-if="nowPage == 2" @addCarCanvas="addCarToHome" @toShowRoute="toPage(3)"  ></select-vehicle>
+      <!-- <select-vehicle  v-else-if="nowPage == 2" @addCarCanvas="addCarToHome" @toShowRoute="toPage(3)"  ></select-vehicle> -->
       <show-route v-else></show-route>
   </div>
 </template>
 <script>
 import SelectCenter from './canvas/SelectCenter'
 import SelectRoutePoint from './canvas/SelectRoutePoint'
-import SelectVehicle from './canvas/SelectVehicle'
+// import SelectVehicle from './canvas/SelectVehicle'
 import ShowRoute from './canvas/showRoute'
 export default {
   data: () => {
@@ -34,8 +34,10 @@ export default {
   components: {
     SelectCenter,
     SelectRoutePoint,
-    SelectVehicle,
     ShowRoute
+  },
+  mounted () {
+    this.$emit('loaded');
   }
 }
 </script>

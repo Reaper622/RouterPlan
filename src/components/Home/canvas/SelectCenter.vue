@@ -22,7 +22,7 @@
       </el-row>
       <el-row>
         <el-col :span="4" :offset="18">
-          <el-button type="success" class="nextStepBtn" @click="storeCenterPoint">成功按钮</el-button>
+          <el-button type="success" class="nextStepBtn" @click="storeCenterPoint">选择路径点按钮</el-button>
         </el-col>
       </el-row>
   </div>

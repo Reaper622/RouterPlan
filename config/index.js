@@ -11,11 +11,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/RoutePlanSystem': {
-        // target: 'http://47.107.65.249:8081',
-        target: 'http://172.22.1.181:8081',
-        changeOrigin: true ,
-      },
+      // '/RoutePlanSystem': {
+      //    target: 'http://47.107.65.249:8848',
+      //    target: 'http://172.22.1.181:8081',
+      //    changeOrigin: true
+      // }
     },
 
     // Various Dev Server settings
@@ -25,7 +25,6 @@ module.exports = {
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
-
 
     /**
      * Source Maps

@@ -12,7 +12,8 @@ export default () => {
       userName: null,
       // 二维数组使用
       centerPoints: [],
-      routePoints: []
+      routePoints: [],
+      qid: 0
     },
     mutations: {
       loginState (state, user) { // 第一个参数为state，第二个为传递的参数
@@ -47,8 +48,12 @@ export default () => {
         state.centerPoints = points
       },
       // 添加路径点
-      setRoutePoints (state,points) {
+      setRoutePoints (state, points) {
         state.routePoints = points
+      },
+      // 演示问题id
+      setQid (state, qid) {
+        state.qid = qid
       }
     },
     getters: {
@@ -74,6 +79,9 @@ export default () => {
       },
       getRoutePoints (state) {
         return state.routePoints
+      },
+      getQid (state) {
+        return state.qid
       }
     }
   })

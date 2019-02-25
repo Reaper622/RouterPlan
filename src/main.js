@@ -11,8 +11,8 @@ import 'es6-promise/auto'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 // Axios.defaults.baseURL = 'http://47.107.65.249:8081/RoutePlanSystem'
-Axios.defaults.baseURL = '/RoutePlanSystem'
-//  Axios.defaults.baseURL = 'http://172.22.1.181:8081/RoutePlanSystem'
+// Axios.defaults.baseURL = 'http://47.107.65.249:8848/RoutePlanSystem'
+ Axios.defaults.baseURL = 'http://172.22.1.201:8081/RoutePlanSystem'
 // Axios.defaults.baseURL = 'http://192.168.43.115:8081/RoutePlanSystem'
 Axios.defaults.withCredentials = true
 Vue.prototype.$axios = Axios

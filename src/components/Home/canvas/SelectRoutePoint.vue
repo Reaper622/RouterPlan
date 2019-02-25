@@ -25,20 +25,22 @@
           <el-button type="info" class="lastStepBtn" @click="toLastStep">返回上一步</el-button>
         </el-col>
         <el-col :span="4" :offset="1">
-          <el-button type="success" class="nextStepBtn" @click="storeCenterPoint">选择车辆</el-button>
+          <el-button type="success" class="nextStepBtn" @click="storeCenterPoint">生成路径</el-button>
         </el-col>
       </el-row>
   </div>
 </template>
 
 <script>
+import qs from 'qs'
 //计数器
 export default {
   data () {
     return {
       canvas : null,
       ctx : null,
-      points:[]
+      points:[],
+      qid:0
     }
   },
   watch: {
@@ -52,6 +54,7 @@ export default {
   mounted(){
     this.initCanvas();
     this.drawCenterPoints();
+    this.getMostNum()
   },
   methods: {
     initCanvas() {
@@ -77,7 +80,7 @@ export default {
       //获取坐标
       let coordinate = this.getMousePos(this.canvas, e);
       //画点
-      this.drawPoint(this.ctx, coordinate.x, coordinate.y, 5,"white");
+      this.drawPoint(this.ctx, coordinate.x, coordinate.y, 8,"white");
       //把点存入数据集
       this.points.push(coordinate);
     },
@@ -110,10 +113,101 @@ export default {
     toLastStep() {
       this.$emit('toCenterPoint');
     },
+    // 上传中心点与路径点
+    uploadPoints (uid,qid) {
+      let centerPoints = this.$store.getters.getCenterPoints
+      let routePoints = this.$store.getters.getRoutePoints
+      let toSendCenterPoints = []
+      let toSendRoutePoints = []
+      let flag = [false, false]
+      // 修改属性名
+      for (let x in centerPoints) {
+        toSendCenterPoints[x] = {userId:uid, questionId:qid, posId: parseInt(x)+1, posX: centerPoints[x].x, posY: centerPoints[x].y, isCenter:1}
+      }
+      let num = toSendCenterPoints.length
+      for (let x in routePoints) {
+        toSendRoutePoints[x] = {userId:uid, questionId:qid, posId: parseInt(num+x)+1, posX: routePoints[x].x, posY: routePoints[x].y, isCenter:0}
+      }
+      // 上传中心点
+      this.$axios.post('/demoNode/demoNewNodes', {
+          jsonArray:toSendCenterPoints
+      },{
+        ContentType: 'application/json'
+      })
+        .then(res => {
+          console.log(res)
+          if (res.data.status === 0) {
+            this.$notify({
+                  title: '成功',
+                  message: '录入中心点成功',
+                  type: 'success'
+                  })
+            flag[0] = true
+            if (flag[0] && flag[1]) {
+              this.$emit('toSelectVehicle')
+            }
+          } else {
+            this.$notify({
+                  title: '失败',
+                  message: '录入中心点失败',
+                  type: 'warning'
+                  })
+          }
+        })
+    // 上传路径点
+    this.$axios.post('/demoNode/demoNewNodes', {
+          jsonArray:toSendRoutePoints
+      },{
+        ContentType: 'application/json'
+      })
+        .then(res => {
+          console.log(res)
+          if (res.data.status === 0) {
+            this.$notify({
+                  title: '成功',
+                  message: '录入路径点成功',
+                  type: 'success'
+                  })
+            flag[1] = true
+            if (flag[0] && flag[1]) {
+              this.$emit('toSelectVehicle')
+            }
+          } else {
+            this.$notify({
+                  title: '失败',
+                  message: '录入路径点点失败',
+                  type: 'warning'
+                  })
+          }
+        })
+    },
+    // 获得当前用户的最大问题号
+    getMostNum () {
+      this.$axios.get('/demoNode/demoNodeMaxQuestionId', {
+        params: {
+          userId: 3
+        }
+      })
+        .then(res => {
+          if(res.data.status === 0) {
+            this.qid = res.data.object + 1
+            this.$store.commit('setQid', res.data.object + 1)
+          } else {
+            this.$notify({
+                  title: '失败',
+                  message: res.data.msg,
+                  type: 'warning'
+                  })
+          }
+        })
+    },
     //点击实现跳转，并把当前中心点传入状态管理
     storeCenterPoint() {
-      this.$store.commit('setRoutePoints',this.points);
-      this.$emit('toSelectVehicle');
+      this.$store.commit('setRoutePoints',this.points)
+      // 上传点
+      let qid = this.qid
+      console.log(qid)
+      this.uploadPoints(3,qid)
     }
   }
 }
